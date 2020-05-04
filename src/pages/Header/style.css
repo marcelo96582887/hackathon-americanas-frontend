@@ -1,0 +1,29 @@
+
+.header-container {
+  background: #ff0000;
+  padding: 30px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.header-container p {
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  padding: 12px;
+}
+
+.header-container img:hover {
+  cursor: pointer;
+}
+
+.logo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo p {
+  text-decoration: underline overline;
+}

@@ -1,0 +1,13 @@
+.home-container {
+  margin-top: 10px;
+  padding: 24px;
+}
+
+.home-container .form-label{
+  font-weight: bold;
+}
+
+.recaptcha {
+  margin-bottom: 15px;
+}
+
