@@ -3,8 +3,8 @@ import { Container, Row, Col, Form, Button, Alert } from 'react-bootstrap';
 import { FiX } from 'react-icons/fi';
 import { useHistory } from 'react-router-dom';
 import api from '../../../../services/api';
-import { Toolbar } from '../style';
-import { ImgPreview, InputImage } from './style';
+import { SToolbar } from '../style';
+import { ImgPreview } from './style';
 
 export default function CadastroImagensProduto(props) {
 
@@ -113,12 +113,12 @@ export default function CadastroImagensProduto(props) {
 
   return (
     <Container fluid >
-      <Toolbar>
+      <SToolbar>
         <h4>Produto {registros?.produto?.descricao} - Cadastro de Imagem</h4>
         <button type='button' onClick={() => { history.goBack() }} >
           <FiX size={20} color="#a8a8b3" />
         </button>
-      </Toolbar>
+      </SToolbar>
 
       <Row className='justify-content-center'>
         <Col xs lg='4'>

@@ -3,7 +3,7 @@ import { Container, Table } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { FiX, FiEdit2, FiTrash2, FiChevronsRight, FiChevronRight, FiChevronsLeft, FiChevronLeft, FiPlus } from 'react-icons/fi';
 import api from '../../../services/api';
-import { Paginator, Page, Toolbar } from './style';
+import { Paginator, Page, SToolbar } from './style';
 
 export default function ImagensProduto(props) {
 
@@ -76,7 +76,7 @@ export default function ImagensProduto(props) {
 
   return (
     <Container fluid>
-      <Toolbar>
+      <SToolbar>
         <h4>Imagens do Produto {produto.descricao}</h4>
         <div>
           <button type='button' onClick={() => handleInsertImagem()} >
@@ -87,7 +87,7 @@ export default function ImagensProduto(props) {
           </button>
 
         </div>
-      </Toolbar>
+      </SToolbar>
       <Table responsive>
         <thead>
           <tr>

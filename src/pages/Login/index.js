@@ -8,7 +8,7 @@ import './style.js';
 import './style.css';
 
 
-export default function Login() {
+export default function Login(props) {
 
   const history = useHistory();
   const [inputCgc, setInputCgc] = useState('');
@@ -21,12 +21,19 @@ export default function Login() {
   const [recaptcha, setRecaptcha] = useState(true);
   const [init, setInit] = useState(false);
 
-  if (!init) {
-    setInit(true);  
-    const autorizado = localStorage.getItem('autorizado');
-    if (autorizado) {
+  if (props?.params?.init && !init) {
+    
+    console.log('passou por aqui');
+    const { autorizado } = props.params;
+    setInit(true);
+    props.params.auth.autorizado = autorizado === 'true' ? true : false;
+    if(props.params.auth.autorizado){
+      props.params.auth.cbToolbar();
+    }
 
-      console.log('aut ', autorizado);
+    /*setAuth(autorizado === 'true' ? true : false);
+    if (autorizado === 'true') {
+      console.log('esta chamado o produto aqui');
       history.push('/produtos', {
         cgc: inputCgc.replace(/[^0-9]/g, ''),
         email: inputEmail,
@@ -34,7 +41,7 @@ export default function Login() {
         limit: 10,
         pagina: 1
       });
-    }
+    }*/
   }
 
   function handleValidaCgc() {
@@ -88,14 +95,13 @@ export default function Login() {
     setRecaptcha(true);
     if (okCgc && okEmail && okSenha && recaptcha) {
 
-      const autorizado = localStorage.getItem('autorizado');
-      if (!autorizado) {
         try {
           const cnpj = inputCgc.replace(/[^0-9]/g, '');
           //const response = await api.get('lojas', {params: {cnpj}});
           //const {ret}  = response.data;
           const ret = { success: true };
           if (ret.success === false) {
+            console.log('esta chamado o produto aqui - depois do login');
             setMsgErrorEmail('Usuário não cadastrado. Redirecionando para cadastro...');
             setTimeout(() => {
               history.push('/produtos', {
@@ -113,7 +119,7 @@ export default function Login() {
             if (!autorizado) {
               localStorage.setItem('autorizado', true);
             }
-            console.log('aut ', autorizado);
+            console.log('esta chamado o produto aqui - depois do login');
             history.push('/produtos', {
               cgc: inputCgc.replace(/[^0-9]/g, ''),
               email: inputEmail,
@@ -129,93 +135,58 @@ export default function Login() {
           alert('Erro na leitura de dados');
         }
 
-      }
-
-      try {
-        const cnpj = inputCgc.replace(/[^0-9]/g, '');
-        //const response = await api.get('lojas', {params: {cnpj}});
-        //const {ret}  = response.data;
-        const ret = { success: true };
-        if (ret.success === false) {
-          setMsgErrorEmail('Usuário não cadastrado. Redirecionando para cadastro...');
-          setTimeout(() => {
-            history.push('/produtos', {
-              cgc: inputCgc.replace(/[^0-9]/g, ''),
-              email: inputEmail,
-              senha: inputSenha,
-              limit: 10,
-              pagina: 1
-            });
-          }, 3000);
-
-          //{parametros: { cnpj: inputCgc.replace(/[^0-9]/g, ''), email: inputEmail }, init:true, action: {insert: true}}
-        } else {
-          history.push('/produtos', {
-            cgc: inputCgc.replace(/[^0-9]/g, ''),
-            email: inputEmail,
-            senha: inputSenha,
-            limit: 10,
-            pagina: 1
-          });
-
-        }
-
-      } catch (error) {
-        alert('Erro na leitura de dados');
-      }
-
-
     }
 
   }
 
 
   return (
-    <Container fluid className='home-container'>
-      <Row className='justify-content-center'>
-        <Col xs lg='4'>
-          <Form>
-            <Form.Group controlId='formCgc'>
-              <Form.Label className='form-label'>Digite o CNPJ da sua empresa</Form.Label>
-              <Form.Control type='text' placeholder='CNPJ'
-                value={inputCgc} onChange={(e) => setInputCgc(e.target.value)}
-                onBlur={handleValidaCgc}
+      <Container fluid className='home-container'>
+        <Row className='justify-content-center'>
+          <Col xs lg='4'>
+            <Form>
+              <Form.Group controlId='formCgc'>
+                <Form.Label className='form-label'>Digite o CNPJ da sua empresa</Form.Label>
+                <Form.Control type='text' placeholder='CNPJ'
+                  value={inputCgc} onChange={(e) => setInputCgc(e.target.value)}
+                  onBlur={handleValidaCgc}
+                />
+              </Form.Group>
+
+              <Alert variant='danger' hidden={MsgErrorCgc == null ? true : false} >{MsgErrorCgc}</Alert>
+
+              <Form.Group controlId='formEmail'>
+                <Form.Label>E-mail</Form.Label>
+                <Form.Control type='e-mail' placeholder='E-mail'
+                  value={inputEmail} onChange={(e) => setInputEmail(e.target.value)}
+                  onBlur={handleValidaEmail}
+                />
+              </Form.Group>
+              <Alert variant='danger' hidden={MsgErrorEmail == null ? true : false} >{MsgErrorEmail}</Alert>
+
+              <Form.Group controlId='formSenha'>
+                <Form.Label>Senha</Form.Label>
+                <Form.Control type='password' placeholder='Senha'
+                  value={inputSenha} onChange={(e) => setInputSenha(e.target.value)}
+                  onBlur={handleValidaSenha}
+                />
+              </Form.Group>
+              <Alert variant='danger' hidden={MsgErrorSenha == null ? true : false} >{MsgErrorSenha}</Alert>
+
+              <ReCAPTCHA className='recaptcha' sitekey='6LePUyAUAAAAAGG0SlDZ_gnJqWKbwnNnxiZL9DdK'
+                onChange={(event) => { handleRecaptcha(event) }}
               />
-            </Form.Group>
+              <Alert variant='danger' hidden={MsgErrroRecaptcha == null ? true : false} >{MsgErrroRecaptcha}</Alert>
+              <Row className='justify-content-center'>
+                <Col xs lg='4'>
+                  <Button onClick={handleHome} className='home-button' variant='primary'>Entrar</Button>
+                </Col>
+              </Row>
+            </Form>
+          </Col>
+        </Row>
+      </Container>
 
-            <Alert variant='danger' hidden={MsgErrorCgc == null ? true : false} >{MsgErrorCgc}</Alert>
-
-            <Form.Group controlId='formEmail'>
-              <Form.Label>E-mail</Form.Label>
-              <Form.Control type='e-mail' placeholder='E-mail'
-                value={inputEmail} onChange={(e) => setInputEmail(e.target.value)}
-                onBlur={handleValidaEmail}
-              />
-            </Form.Group>
-            <Alert variant='danger' hidden={MsgErrorEmail == null ? true : false} >{MsgErrorEmail}</Alert>
-
-            <Form.Group controlId='formSenha'>
-              <Form.Label>Senha</Form.Label>
-              <Form.Control type='password' placeholder='Senha'
-                value={inputSenha} onChange={(e) => setInputSenha(e.target.value)}
-                onBlur={handleValidaSenha}
-              />
-            </Form.Group>
-            <Alert variant='danger' hidden={MsgErrorSenha == null ? true : false} >{MsgErrorSenha}</Alert>
-
-            <ReCAPTCHA className='recaptcha' sitekey='6LePUyAUAAAAAGG0SlDZ_gnJqWKbwnNnxiZL9DdK'
-              onChange={(event) => { handleRecaptcha(event) }}
-            />
-            <Alert variant='danger' hidden={MsgErrroRecaptcha == null ? true : false} >{MsgErrroRecaptcha}</Alert>
-            <Row className='justify-content-center'>
-              <Col xs lg='4'>
-                <Button onClick={handleHome} className='home-button' variant='primary'>Entrar</Button>
-              </Col>
-            </Row>
-          </Form>
-        </Col>
-      </Row>
-    </Container>
 
   );
 };

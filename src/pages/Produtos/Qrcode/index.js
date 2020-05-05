@@ -3,7 +3,7 @@ import { Container, Row, Col, Form, Button, Alert, Modal } from 'react-bootstrap
 import { FiX } from 'react-icons/fi';
 import { useHistory } from 'react-router-dom';
 import api from '../../../services/api';
-import { Toolbar } from '../style';
+import { SToolbar } from '../style';
 import QRCODE from './QrcodeGenerate';
 
 
@@ -120,12 +120,12 @@ export default function QrcodeProduto(props) {
 
   return (
     <Container fluid >
-      <Toolbar>
+      <SToolbar>
         <h4>Produto {registros?.produto?.descricao} - Cadastro de Qrcode</h4>
         <button type='button' onClick={() => { history.push('/produtos') }} >
           <FiX size={20} color="#a8a8b3" />
         </button>
-      </Toolbar>
+      </SToolbar>
 
 
 

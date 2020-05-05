@@ -3,7 +3,8 @@ import { Container, Table } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { FiEdit2, FiTrash2, FiChevronsRight, FiChevronRight, FiChevronsLeft, FiChevronLeft, FiPlus } from 'react-icons/fi';
 import api from '../../services/api';
-import { Paginator, Page, Toolbar } from './style';
+import { Paginator, Page, SToolbar } from './style';
+import Toolbar from '../Toolbar';
 
 export default function Especificacoes() {
 
@@ -68,12 +69,13 @@ export default function Especificacoes() {
 
   return (
     <Container fluid>
-      <Toolbar>
+      <Toolbar />
+      <SToolbar>
         <h4>Especificações</h4>
         <button type='button' onClick={() => { handleCadastroEspecificacao() }} >
           <FiPlus size={20} color="#a8a8b3" />
         </button>
-      </Toolbar>
+      </SToolbar>
       <Table responsive>
         <thead>
           <tr>

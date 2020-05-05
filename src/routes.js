@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import Login from './pages/Login';
@@ -22,15 +22,16 @@ import EspecificacoesProduto from './pages/Produtos/Especificacoes';
 import ListaEspecificacoesProduto from './pages/Produtos/Especificacoes/Lista';
 //import CadastroUsuario from './pages/Cadastro';
 //<Route path='/cadastro/usuario' exact component={CadastroUsuario} />
+//    <Toolbar />
 
 
-export default function Routes(props) {
+
+export default function Routes() {
 
 
   return (
     <BrowserRouter>
-    <Header />
-    <Toolbar />
+      <Header />
       <Switch>
         <Route path='/' exact component={Login} />
         <Route path='/sair' exact component={Login} />
@@ -49,7 +50,10 @@ export default function Routes(props) {
         <Route path='/produtos/qrcode' exact component={QrcodeProduto} />
         <Route path='/produtos/especificacoes' exact component={EspecificacoesProduto} />
         <Route path='/produtos/especificacoes/lista' exact component={ListaEspecificacoesProduto} />
+
         <Route path='/' component={NotFound} />
+
+
       </Switch>
     </BrowserRouter>
   );

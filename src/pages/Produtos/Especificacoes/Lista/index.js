@@ -3,7 +3,7 @@ import { Container, Table } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { FiX, FiChevronsRight, FiChevronRight, FiChevronsLeft, FiChevronLeft } from 'react-icons/fi';
 import api from '../../../../services/api';
-import { Paginator, Page, Toolbar, Confirmar } from './style';
+import { Paginator, Page, SToolbar, Confirmar } from './style';
 import './style.css';
 
 
@@ -95,12 +95,12 @@ export default function ListaEspecificacoesProduto(props) {
 
   return (
     <Container fluid>
-      <Toolbar>
+      <SToolbar>
         <h4>Selecionar especificações para o produto {nomeProduto}</h4>
         <button type='button'>
           <FiX size={20} color="#a8a8b3" onClick={() => { handleClose() }} />
         </button>
-      </Toolbar>
+      </SToolbar>
       <Table responsive>
         <thead>
           <tr>

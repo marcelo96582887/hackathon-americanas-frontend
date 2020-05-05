@@ -3,7 +3,8 @@ import { Container, Table } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { FiEdit2, FiTrash2, FiFileText, FiImage, FiGrid, FiChevronsRight, FiChevronRight, FiChevronsLeft, FiChevronLeft, FiPlus } from 'react-icons/fi';
 import api from '../../services/api';
-import { Paginator, Page, Toolbar } from './style';
+import { Paginator, Page, SToolbar } from './style';
+import Toolbar from '../Toolbar';
 
 export default function Produtos() {
 
@@ -28,7 +29,6 @@ export default function Produtos() {
     try {
       const response = await api.get('produtos', { params: { page } });
       const { ret, totalReg } = response.data;
-      console.log(ret);
       setTotal(totalReg);
       setPage(page + 1);
       setRegistros(ret);
@@ -79,12 +79,13 @@ export default function Produtos() {
 
   return (
     <Container fluid>
-      <Toolbar>
+      <Toolbar />
+      <SToolbar>
         <h4>Produtos</h4>
         <button type='button' onClick={() => { handleCadastro() }} >
           <FiPlus size={20} color="#a8a8b3" />
         </button>
-      </Toolbar>
+      </SToolbar>
       <Table responsive>
         <thead>
           <tr>

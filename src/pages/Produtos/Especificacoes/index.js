@@ -3,7 +3,8 @@ import { Container, Table } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { FiX, FiTrash2, FiChevronsRight, FiChevronRight, FiChevronsLeft, FiChevronLeft, FiPlus } from 'react-icons/fi';
 import api from '../../../services/api';
-import { Paginator, Page, Toolbar } from './style';
+import { Paginator, Page, SToolbar } from './style';
+import Toolbar from '../../Toolbar';
 
 export default function EspecificacoesProduto(props) {
 
@@ -55,7 +56,6 @@ export default function EspecificacoesProduto(props) {
       const id_especificacao = reg.id_especificacao;
       const id_produto = reg.id_produto;
       await api.delete(`especificacoes_produtos/${id_produto}/${id_especificacao}`);
-      const index = itens.length - 1;
       setItens(itens.filter(item => item.id_especificacao !== id_especificacao 
           && id_especificacao));
     } catch (err) {
@@ -65,7 +65,7 @@ export default function EspecificacoesProduto(props) {
 
   return (
     <Container fluid>
-      <Toolbar>
+      <SToolbar>
         <h4>Especificaçôes do Produto: {registros?.produto?.descricao}</h4>
         <div>
           <button type='button' onClick={() => { history.push('/produtos/especificacoes/lista', { params: {id: registros.produto.id, nome: registros.produto.descricao}, init: true }) }} >
@@ -76,7 +76,7 @@ export default function EspecificacoesProduto(props) {
           </button>
 
         </div>
-      </Toolbar>
+      </SToolbar>
       <Table responsive>
         <thead>
           <tr>
